@@ -3,7 +3,7 @@ package org.example.string;
 /**
  * Problem: Reverse a String
  * Description: Reverses a given string using character traversal.
- * Author: Your Name
+ * Author: Tushar Kokane
  * Date: 2025-05-01
  */
 
