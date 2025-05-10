@@ -1,0 +1,26 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # ⏰ Every 15 minutes for testing
+  workflow_dispatch:        # Allows manual trigger from GitHub UI
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update timestamp (for test)
+        run: |
+          echo "Last auto-commit time: $(date -u)" > last-commit-time.txt
+
+      - name: Commit & Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore(auto-commit): 🤖 update timestamp [skip ci]" || echo "No changes to commit"
+          git push
