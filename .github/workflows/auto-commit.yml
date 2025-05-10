@@ -2,7 +2,7 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # ⏰ Every 15 minutes for testing
+    - cron: '*/15 * * * *'  # ⏰ Every 15 minutes for testing
   workflow_dispatch:        # Allows manual trigger from GitHub UI
 
 jobs:
@@ -13,14 +13,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Print current directory
+        run: |
+          echo "Current directory contents:"
+          ls -alh
+
+      - name: Set up Git credentials
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: Update timestamp (for test)
         run: |
           echo "Last auto-commit time: $(date -u)" > last-commit-time.txt
+          cat last-commit-time.txt  # Print the file content to debug
 
       - name: Commit & Push changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore(auto-commit): 🤖 update timestamp [skip ci]" || echo "No changes to commit"
-          git push
+          git push https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || echo "Failed to push changes"
