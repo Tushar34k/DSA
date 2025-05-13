@@ -2,7 +2,7 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
+    - cron: '*/5 * * * *'  # Runs every 5 minutes
   workflow_dispatch:        # Manual trigger from GitHub UI
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # This allows pushing without manually setting credentials
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Git credentials
         run: |
@@ -22,11 +22,14 @@ jobs:
 
       - name: Update timestamp file
         run: |
-          echo "Last auto-commit time: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" > last-commit-time.txt
-          cat last-commit-time.txt
+          echo "# Auto-generated timestamp for testing Git commit" > last-commit-time.txt
+          echo "Last auto-commit time: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> last-commit-time.txt
 
       - name: Commit & Push changes
         run: |
           git add last-commit-time.txt
-          git commit -m "chore(auto-commit): 🤖 update timestamp [skip ci]" || echo "No changes to commit"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(auto-commit): 🤖 update timestamp [skip ci]"
+            git push origin HEAD
+          else
+            echo "No changes to commit"
