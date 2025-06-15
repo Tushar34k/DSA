@@ -2,7 +2,7 @@ package org.example.array;
 
 /**
  * Problem: Find the Missing Number
- * Author: Your Name
+ * Author: Tushar Kokane
  * Date: 2025-05-01
  *
  * Time Complexity: O(n)
