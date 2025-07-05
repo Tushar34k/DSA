@@ -2,7 +2,7 @@ name: Auto Commit DSA Work
 
 on:
   schedule:
-    - cron: '57 6 * * *'  # Runs at 06:57 UTC → 12:27 PM IST
+    - cron: '30 6 * * *'  # 06:30 UTC = 12:00 PM IST
   workflow_dispatch:      # Allows manual run
 
 jobs:
