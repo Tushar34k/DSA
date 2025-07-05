@@ -1,40 +1,26 @@
-name: Auto Commit
+name: Auto Commit DSA Work
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
-  workflow_dispatch:      # Manual trigger from GitHub UI
+    - cron: '0 18 * * *'  # Runs every day at 6 PM UTC (adjust to IST if needed)
+  workflow_dispatch:      # Allows manual run
 
 jobs:
-
   auto-commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Git credentials
+      - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
 
-      - name: Update timestamp file
+      - name: Commit and push changes
         run: |
-          echo "# Auto-generated timestamp for testing Git commit" > last-commit-time.txt
-          echo "Last auto-commit time: $(date -u +"%Y-%m-%dT%H:%M:%S.%NZ")" >> last-commit-time.txt
-          echo "Random value: $RANDOM" >> last-commit-time.txt
-          cat last-commit-time.txt
-
-      - name: Commit & Push changes
-        run: |
-          git add last-commit-time.txt
-          if git diff --cached --quiet; then
-            echo "✅ No changes to commit."
-          else
-            echo "🔄 Changes detected. Committing..."
-            git commit -m "chore(auto-commit): 🤖 update timestamp [skip ci]"
-            echo "🚀 Pushing changes..."
-            git push origin HEAD || echo "❌ Git push failed."
+          git add .
+          timestamp=$(date)
+          git commit -m "chore: auto commit on $timestamp" || echo "No changes to commit"
+          git push
