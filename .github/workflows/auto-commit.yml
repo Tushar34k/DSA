@@ -2,8 +2,8 @@ name: Auto Commit DSA Work
 
 on:
   schedule:
-    - cron: '30 6 * * *'  # 06:30 UTC = 12:00 PM IST
-  workflow_dispatch:      # Allows manual run
+    - cron: '15 7 * * *'  # 07:15 UTC = 12:45 PM IST
+  workflow_dispatch:      # Allows manual run via GitHub UI
 
 jobs:
   auto-commit:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Configure Git
         run: |
