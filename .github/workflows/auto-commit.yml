@@ -2,8 +2,9 @@ name: Auto Commit DSA Work
 
 on:
   schedule:
-    - cron: '15 7 * * *'  # 07:15 UTC = 12:45 PM IST
-  workflow_dispatch:      # Allows manual run via GitHub UI
+    - cron: '40 10 * * *'  # 10:40 UTC = 4:10 PM IST
+  workflow_dispatch:        # Allows manual run via GitHub UI
+
 
 jobs:
   auto-commit:
