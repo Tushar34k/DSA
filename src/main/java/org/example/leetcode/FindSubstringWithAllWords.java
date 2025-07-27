@@ -4,7 +4,7 @@ import java.util.*;
 
 
 /**
- * Problem: 4Sum
+ * Problem: FindSubstringWithAllWords
  * Author: Tushar Kokane
  * Date: 2025-07-27
  *
