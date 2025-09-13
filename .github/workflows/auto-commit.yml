@@ -13,16 +13,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          persist-credentials: true
+          token: ${{ secrets.PAT_TOKEN }}    # Use the PAT securely here
+          persist-credentials: false
 
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Action Bot"
-          git config --global user.email "action@github.com"
+          git config --global user.name "Tushar34k"
+          git config --global user.email "tusharkokane366@gmail.com"
 
       - name: Commit and push changes
         run: |
           git add .
           timestamp=$(date)
           git commit -m "chore: auto commit on $timestamp" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }} HEAD:master
