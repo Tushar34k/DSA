@@ -20,8 +20,6 @@ public class FirstOccurrenceInString {
             if (haystack.substring(i, i + m).equals(needle)) {
                 return i;
             }
-            else if (haystack.substring(i, i + n - i).equals(needle))
-                return i;
         }
 
         return -1;
@@ -36,9 +34,8 @@ public class FirstOccurrenceInString {
         String needle2 = "leeto";
         System.out.println("Index: " + strStr(haystack2, needle2)); // Output: -1
 
-        String haystack3= "hello";
-        String needle3= "ll";
-
-        System.out.println(strStr(haystack3,needle3));
+        String haystack3 = "hello";
+        String needle3 = "ll";
+        System.out.println("Index: " + strStr(haystack3, needle3)); // Output: 2
     }
 }
