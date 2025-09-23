@@ -38,9 +38,7 @@ public class ArrayADT {
         }
     }
 
-    /**
-     * Displays the current contents of the array.
-     */
+   
     public void display() {
         System.out.print("Array contents: ");
         for (int i = 0; i < size; i++) {
